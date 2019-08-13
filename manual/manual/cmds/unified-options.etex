@@ -195,10 +195,6 @@ installed. Moreover, the ``custom runtime'' mode enables static
 linking of OCaml code with user-defined C functions, as described in
 chapter~\ref{c:intf-c}.
 \begin{unix}
-Never use the "strip" command on executables produced by "ocamlc -custom",
-this would remove the bytecode part of the executable.
-\end{unix}
-\begin{unix}
 Security warning: never set the ``setuid'' or ``setgid'' bits on executables
 produced by "ocamlc -custom", this would make them vulnerable to attacks.
 \end{unix}
