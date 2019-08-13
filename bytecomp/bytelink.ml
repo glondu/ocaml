@@ -574,13 +574,6 @@ let build_custom_runtime prim_name exec_name =
     (debug_prefix_map @ [prim_name] @ List.rev !Clflags.ccobjs @ [runtime_lib])
     (Clflags.std_include_flag "-I" ^ " " ^ Config.bytecomp_c_libraries)
 
-let append_bytecode bytecode_name exec_name =
-  let oc = open_out_gen [Open_wronly; Open_append; Open_binary] 0 exec_name in
-  let ic = open_in_bin bytecode_name in
-  copy_file ic oc;
-  close_in ic;
-  close_out oc
-
 (* Fix the name of the output file, if the C compiler changes it behind
    our back. *)
 
@@ -660,8 +653,6 @@ let link objfiles output_name =
          let exec_name = fix_exec_name output_name in
          if not (build_custom_runtime prim_name exec_name)
          then raise(Error Custom_runtime);
-         if not !Clflags.make_runtime then
-           append_bytecode bytecode_name exec_name
       )
   end else begin
     let basename = Filename.chop_extension output_name in
