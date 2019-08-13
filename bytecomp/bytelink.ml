@@ -499,7 +499,11 @@ let link_bytecode_as_c tolink outfile with_main =
        (* The entry point *)
        if with_main then begin
          output_string outchan "\
-\nint main(int argc, char_os **argv)\
+\n#ifdef _WIN32\
+\nint wmain(int argc, wchar_t **argv)\
+\n#else\
+\nint main(int argc, char **argv)\
+\n#endif\
 \n{\
 \n  caml_startup_code(caml_code, sizeof(caml_code),\
 \n                    caml_data, sizeof(caml_data),\
